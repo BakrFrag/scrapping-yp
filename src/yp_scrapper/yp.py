@@ -152,8 +152,8 @@ class YPScrapper:
             website_url: str include web site url
             address: str address
         """
-        pages_with_results = self.define_pages()
-        print("pages:",pages_with_results)
+        
+        pages_with_results:List[Any] = self.define_pages()
         scrapping_results:List[Dict[str,str]] = [] 
         for page in pages_with_results:
             (url , result_counter) = page[0] , page[1]
@@ -171,12 +171,16 @@ class YPScrapper:
                     "phone_number": self.get_phone_number(row),
                     "date": datetime.now()
                 }
-                print(scrapped_data)
                 number_of_results += 1
                 scrapping_results.append(scrapped_data)
                 if number_of_results >= result_counter:
                     break
         return scrapping_results
+    
+    
+    
+        
+      
                     
         
         

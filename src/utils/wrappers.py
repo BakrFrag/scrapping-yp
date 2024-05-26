@@ -1,4 +1,3 @@
-import os
 from pymongo import MongoClient as errors
 from functools import wraps
 

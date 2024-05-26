@@ -39,7 +39,7 @@ if these info exists
 
 - you can load it directly into postman
 
-- Postman Collection link: https://winter-desert-603042.postman.co/workspace/GitHub-~83d00952-4216-4e33-889c-2957a579fafc/collection/6749950-78ca4c0f-8e8c-4727-8da9-173255c10a14?action=share&creator=6749950
+- Postman Collection link: https://api.postman.com/collections/6749950-78ca4c0f-8e8c-4727-8da9-173255c10a14?access_key=PMAT-01HYV99SY180ZWDBB0V4NFJXX2
 
 - post request end point `http:127.0.0.1:8000/api/scrape-yp/`
 

@@ -1,5 +1,8 @@
-from pymongo import MongoClient as errors
+import logging
+from pymongo import errors
 from functools import wraps
+
+logger = logging.getLogger("yp")
 
 def handle_mongo_errors(func):
     """
@@ -13,6 +16,6 @@ def handle_mongo_errors(func):
         try:
             return func(self, *args, **kwargs)
         except errors.PyMongoError as err:
-            print(f"An error occurred: {err}")
+            logger.error(f"mongo db error with connecting {str(err)}")
             return None
     return wrapper

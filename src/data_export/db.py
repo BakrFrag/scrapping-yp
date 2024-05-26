@@ -1,7 +1,9 @@
+import logging
 from typing import Dict , List 
 import pymongo 
 from utils import get_config , handle_mongo_errors
 
+logger = logging.getLogger("yp")
 
 class MongoClient:
     """
@@ -15,7 +17,7 @@ class MongoClient:
         self.dbname:str = get_config("MONGO_DB_NAME")
         self.collection_name:str = get_config("MONGON_COLLECTION_NAME")
         self.client = self.set_mongo_client()
-        
+        logger.info("mongo db init connection")
         
     def set_mongo_client(self):
         """
@@ -26,7 +28,7 @@ class MongoClient:
         try:
             return pymongo.MongoClient(self.client_str, serverselectiontimeoutms = MongoClient.SERVER_TIME_OUT_SECONDS)
         except pymongo.errors.PyMongoError as err:
-            print(f"error set mongo db connection with error {err}")
+            logger.error(f"error setting up mongo db connection {str(err)}")
         
     @handle_mongo_errors
     def database_exists(self) -> bool:
@@ -51,6 +53,7 @@ class MongoClient:
         if not self.database_exists():
             db = self.client[self.dbname]
             collection = db[self.collection_name] 
+            logger.info("create database and collection")
             
     @handle_mongo_errors
     def get_data_from_collection(self) -> List[Dict[str,str]]:
@@ -79,6 +82,7 @@ class MongoClient:
         self.create_database_if_not_exists()
         collection = self.client[self.dbname][self.collection_name]
         collection.insert_many(documents)
+        logger.info("insert extracted data into mongo db")
         
         
         

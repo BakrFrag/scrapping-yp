@@ -1,5 +1,8 @@
+import logging
 import time
 from selenium import webdriver
+
+logger = logging.getLogger("yp")
 
 class DriverManager:
     """
@@ -20,9 +23,12 @@ class DriverManager:
         """
         get url as web driver
         """
-        
-        self.driver.get(url)
-        time.sleep(10)
+        try:
+            self.driver.get(url)
+            time.sleep(10)
+            logger.info(f"driver get url {url}")
+        except Exception as e:
+            logger.error(f"while getting driver url exception {str(e)} happens")
         
     def driver_quit(self):
         """

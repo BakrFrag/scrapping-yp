@@ -1,3 +1,4 @@
+import logging
 import time
 import math
 from datetime import datetime
@@ -5,6 +6,7 @@ from typing import List , Any , Dict
 from selenium.webdriver.common.by import By 
 from yp_scrapper import DriverManager
 
+logger = logging.getLogger("yp")
 
 class YPScrapper:
     """
@@ -137,6 +139,8 @@ class YPScrapper:
             else:
                 pages.append([f"{YPScrapper.BASE_URL}{self.keyword}/p{i}",20])
                 cards -= 20
+                
+        logger.info(f"scrapping definded pages with {pages}")
         return pages
     
     def extract_data(self) -> List[Dict[str, str]]:
@@ -175,6 +179,8 @@ class YPScrapper:
                 scrapping_results.append(scrapped_data)
                 if number_of_results >= result_counter:
                     break
+                
+        logger.info(f"data for scrapping extracted well")
         return scrapping_results
     
     

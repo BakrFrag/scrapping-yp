@@ -78,5 +78,18 @@ class Scrapper():
         except:
             return "N/A"
         
+    def get_category(self, card) -> str:
+        """
+        extract category 
+        returns: str 
+            categories
+        """
+        try:
+            category = category.find_element(By.CLASS_NAME , "category")
+            category = category.find_element(By.TAG_NAME , "a")
+            return " ".join(category.text.split())
+        except:
+            return "N/A"
+        
     
         

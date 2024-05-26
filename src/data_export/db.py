@@ -1,5 +1,6 @@
 import logging
-from typing import Dict , List 
+from typing import Dict , List , Any
+from datetime import datetime
 import pymongo 
 from utils import get_config , handle_mongo_errors
 
@@ -83,6 +84,42 @@ class MongoClient:
         collection = self.client[self.dbname][self.collection_name]
         collection.insert_many(documents)
         logger.info("insert extracted data into mongo db")
+        
+        
+    @handle_mongo_errors
+    def get_collection_data(self) -> List[Dict[str,str]]:
+        """
+        get all data from collection
+        returns: List[Dict[str,str]]
+            list of all documents from the collection
+        """
+        data_base = self.client[self.dbname]
+        collection = data_base[self.collection_name]
+        return list(collection.find({}))
+        
+    @handle_mongo_errors
+    def scrape_or_read_directly(self) -> bool:
+        """
+        check the date between current date and last inserted item date
+        returns: bool 
+            weather to scrape data or read from db
+            
+        """
+        if not self.database_exists():
+            return True 
+        
+        collection = self.client[self.dbname][self.collection_name]
+        last_item = collection.find_one(sort=[("_id", -1)])
+        if not last_item:
+            return True
+        
+        if last_item.get("date").date() != datetime.today().date():
+            return True 
+        
+        return False
+        
+    
+        
         
         
         

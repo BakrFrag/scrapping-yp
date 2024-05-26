@@ -125,15 +125,15 @@ class YPScrapper:
         """
         
         if self.card_numbers <= 20:
-            return [f"{YPScrapper.BASE_URL}/{self.keyword}/p1", self.card_numbers]
+            return [f"{YPScrapper.BASE_URL}{self.keyword}/p1", self.card_numbers]
         pages:List = []
         number_of_pages:int = int((self.card_numbers/YPScrapper.CARDS_PER_PAGE))+1
         cards:int = self.card_numbers
         for i in range(1,number_of_pages+1):
             if cards <= 20:
-                pages.append([f"{YPScrapper.BASE_URL}/{self.keyword}/p{i}",cards])
+                pages.append([f"{YPScrapper.BASE_URL}{self.keyword}/p{i}",cards])
             else:
-                pages.append([f"{YPScrapper.BASE_URL}/{self.keyword}/p{i}",20])
+                pages.append([f"{YPScrapper.BASE_URL}{self.keyword}/p{i}",20])
                 cards -= 20
         return pages
     
@@ -151,6 +151,7 @@ class YPScrapper:
             address: str address
         """
         pages_with_results = self.define_pages()
+        print("pages:",pages_with_results)
         scrapping_results:List[Dict[str,str]] = [] 
         for page in pages_with_results:
             (url , result_counter) = page[0] , page[1]
@@ -165,8 +166,9 @@ class YPScrapper:
                     "image_url": self.get_company_logo(row),
                     "website_url": self.get_website_url(row),
                     "category": self.get_category(row),
-                    "phone_address": self.get_phone_number(row)
+                    "phone_number": self.get_phone_number(row)
                 }
+                print(scrapped_data)
                 number_of_results += 1
                 scrapping_results.append(scrapped_data)
                 if number_of_results >= result_counter:

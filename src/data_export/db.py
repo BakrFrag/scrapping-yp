@@ -17,16 +17,16 @@ class MongoClient:
         self.client = self.set_mongo_client()
         
         
-    @handle_mongo_errors
+    # @handle_mongo_errors
     def set_mongo_client(self):
         """
         set mongo client connection
         raises:
             PyMongoError: if mongo connection error happens
         """
-        return pymongo.MongoClient(self.client_str, seMverSelectionTimeoutMS = MongoClient.SERVER_TIME_OUT_SECONDS)
+        return pymongo.MongoClient(self.client_str, serverselectiontimeoutms = MongoClient.SERVER_TIME_OUT_SECONDS)
         
-    @handle_mongo_errors
+    # @handle_mongo_errors
     def database_exists(self) -> bool:
         """
         check if application database exists on not
@@ -38,7 +38,7 @@ class MongoClient:
         
         return self.dbname in self.client.list_database_names()
     
-    @handle_mongo_errors
+    # @handle_mongo_errors
     def create_database_if_not_exists(self):
         """
         if db not exists 
@@ -46,11 +46,11 @@ class MongoClient:
         raises:
             PyMongoError: if mongo connection error happens
         """
-        if not self.database_exists(self.dbname):
+        if not self.database_exists():
             db = self.client[self.dbname]
             collection = db[self.collection_name] 
             
-    @handle_mongo_errors
+    # @handle_mongo_errors
     def get_data_from_collection(self) -> List[Dict[str,str]]:
         """
         get all data from collection and return it 
@@ -67,7 +67,7 @@ class MongoClient:
         documents = collection.find()
         return list(documents)
         
-    @handle_mongo_errors
+    # @handle_mongo_errors
     def insert_bulk_documents(self, documents: List[Dict[str,str]]):
         """
         insert list of bulk documents inside database

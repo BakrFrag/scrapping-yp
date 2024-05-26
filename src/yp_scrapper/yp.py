@@ -92,7 +92,7 @@ class Scrapper():
             categories
         """
         try:
-            category = category.find_element(By.CLASS_NAME , "category")
+            category = card.find_element(By.CLASS_NAME , "category")
             category = category.find_element(By.TAG_NAME , "a")
             return " ".join(category.text.split())
         except:
@@ -126,7 +126,7 @@ class Scrapper():
         """
         
         if self.card_numbers <= 20:
-            return [self.url, self.card_numbers]
+            return [f"{Scrapper.BASE_URL}/{self.keyword}/p1", self.card_numbers]
         pages:List = []
         number_of_pages:int = int((self.card_numbers/Scrapper.CARDS_PER_PAGE))+1
         cards:int = self.card_numbers
@@ -134,7 +134,7 @@ class Scrapper():
             if cards <= 20:
                 pages.append([f"{Scrapper.BASE_URL}/{self.keyword}/p{i}",cards])
             else:
-                pages.append([f"{self.url}/p{i}",20])
+                pages.append([f"{Scrapper.BASE_URL}/{self.keyword}/p{i}",20])
                 cards -= 20
         return pages
     
@@ -155,7 +155,7 @@ class Scrapper():
         scrapping_results:List[Dict[str,str]] = [] 
         for page in pages_with_results:
             (url , result_counter) = page[0] , page[1]
-            self.driver_manager.get(url)
+            self.driver_manager.driver.get(url)
             row_data_elements = self.driver_manager.driver.find_elements(By.CSS_SELECTOR, '.row.item-row:not(.search-ads)')
             number_of_results:int = 0
             for row in row_data_elements:
@@ -169,7 +169,7 @@ class Scrapper():
                     "phone_address": self.get_phone_number(row)
                 }
                 number_of_results += 1
-                scrapping_results.apped(scrapped_data)
+                scrapping_results.append(scrapped_data)
                 if number_of_results >= result_counter:
                     break
         return scrapping_results

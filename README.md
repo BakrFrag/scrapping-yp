@@ -133,6 +133,7 @@ if these info exists
 | pydantic| python library for data validation using pandas |
 | selenium | dynamic web scrapping |
 |python-dotenv| python library for managing secrets and sensitive data|
+|pymongo| python client for mongo db |
 
 ### Future Enhancements 
 - add choices to export data along with store it like export data in `excel`  , `csv` or save it directly to hard disk 

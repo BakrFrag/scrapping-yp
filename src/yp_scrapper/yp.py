@@ -1,11 +1,10 @@
 import time
 from typing import List , Any , Dict
-from selenium import webdriver
 from selenium.webdriver.common.by import By 
-from yp_scrapper.driver import DriverManager
+from yp_scrapper import DriverManager
 
 
-class Scrapper:
+class YPScrapper:
     """
     scrape yellow pages 
     extract info from cards and return data
@@ -126,15 +125,15 @@ class Scrapper:
         """
         
         if self.card_numbers <= 20:
-            return [f"{Scrapper.BASE_URL}/{self.keyword}/p1", self.card_numbers]
+            return [f"{YPScrapper.BASE_URL}/{self.keyword}/p1", self.card_numbers]
         pages:List = []
-        number_of_pages:int = int((self.card_numbers/Scrapper.CARDS_PER_PAGE))+1
+        number_of_pages:int = int((self.card_numbers/YPScrapper.CARDS_PER_PAGE))+1
         cards:int = self.card_numbers
         for i in range(1,number_of_pages+1):
             if cards <= 20:
-                pages.append([f"{Scrapper.BASE_URL}/{self.keyword}/p{i}",cards])
+                pages.append([f"{YPScrapper.BASE_URL}/{self.keyword}/p{i}",cards])
             else:
-                pages.append([f"{Scrapper.BASE_URL}/{self.keyword}/p{i}",20])
+                pages.append([f"{YPScrapper.BASE_URL}/{self.keyword}/p{i}",20])
                 cards -= 20
         return pages
     

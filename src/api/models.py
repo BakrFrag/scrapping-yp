@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional
+
 class ScrapeRequest(BaseModel):
     """
     Scrape model: pydantic model for data validations

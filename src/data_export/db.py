@@ -1,7 +1,6 @@
 from typing import Dict , List 
 import pymongo 
-from utils.wrappers import handle_mongo_errors
-from utils.commons import get_config
+from utils import get_config , handle_mongo_errors
 
 
 class MongoClient:

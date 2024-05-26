@@ -91,5 +91,22 @@ class Scrapper():
         except:
             return "N/A"
         
+    def get_company_logo(self, card) -> str:  
+        """
+        extract card image url
+        returns: str 
+            card logo url
+        """
+        try:
+            logo_container = card.find_element(By.CLASS_NAME , "logo-container")
+            image = logo_container.find_element(By.TAG_NAME , "img")
+            image_url = image.get_attribute("src")  or image.get_attribute("data-src") 
+            image_url = image_url if image_url.startswith("https://") else  f"https://{image_url}"
+            return image_url
+        
+        except:
+            return "N/A"
+        
+        
     
         

@@ -2,7 +2,7 @@ import time
 from typing import List , Any
 from selenium import webdriver
 
-class WebDriver():
+class DriverManager():
     """
     handle web driver operations 
     like init , quit and get url
@@ -11,6 +11,10 @@ class WebDriver():
     CARDS_PER_PAGE:int = 20
     
     def __init__(self, keyword:str, card_numbers:int):
+        """
+        init instance variable for web driver
+        """
+        
         self.options = webdriver.ChromeOptions()
         self.options.add_argument('--headless')
         self.driver = webdriver.Chrome(options= self.options)
@@ -29,7 +33,7 @@ class WebDriver():
         
         if self.card_numbers <= 20:
             return [self.url, self.card_numbers]
-        pages:List = list()
+        pages:List = []
         number_of_pages:int = int((self.card_numbers/self.CARDS_PER_PAGE))+1
         cards:int = self.card_numbers
         for i in range(1,number_of_pages+1):

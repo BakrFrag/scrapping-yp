@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import Optional
 
@@ -25,3 +26,4 @@ class ScrapeResponse(BaseModel):
     image_url: Optional[str]
     phone_number: Optional[str]
     category: Optional[str]
+    at: datetime

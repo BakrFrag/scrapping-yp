@@ -1,4 +1,5 @@
 import time
+import datetime
 from typing import List , Any , Dict
 from selenium.webdriver.common.by import By 
 from yp_scrapper import DriverManager
@@ -166,7 +167,8 @@ class YPScrapper:
                     "image_url": self.get_company_logo(row),
                     "website_url": self.get_website_url(row),
                     "category": self.get_category(row),
-                    "phone_number": self.get_phone_number(row)
+                    "phone_number": self.get_phone_number(row),
+                    "at": datetime.datetime.now()
                 }
                 print(scrapped_data)
                 number_of_results += 1

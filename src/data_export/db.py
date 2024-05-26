@@ -95,7 +95,7 @@ class MongoClient:
         """
         data_base = self.client[self.dbname]
         collection = data_base[self.collection_name]
-        return list(collection.find({}))
+        return list(collection.find({}, {"_id": 0}))
         
     @handle_mongo_errors
     def scrape_or_read_directly(self) -> bool:

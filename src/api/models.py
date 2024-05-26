@@ -12,7 +12,7 @@ class ScrapeRequest(BaseModel):
             number of search result  , number between 30 and 100
     """
     keyword: str
-    number: int = Field(..., ge=30, le=100)
+    number: int = Field(30, ge=30, le=100)
     
 class ScrapeResponse(BaseModel):
     """

@@ -1,5 +1,5 @@
 import time
-from typing import List , Any
+from typing import List , Any , Dict
 from selenium import webdriver
 from selenium.webdriver.common.by import By 
 from yp_scrapper.driver import DriverManager
@@ -137,6 +137,43 @@ class Scrapper():
                 pages.append([f"{self.url}/p{i}",20])
                 cards -= 20
         return pages
+    
+    def extract_data(self) -> List[Dict[str, str]]:
+        """
+        extract info from each page
+        returns: List[Dict[str, str]]
+            return list of dict , each dict include 
+            phone_address: str  phone number
+            category: str category info 
+            description: str text include description
+            title: str title
+            image_url: str logo url 
+            website_url: str include web site url
+            address: str address
+        """
+        pages_with_results = self.define_pages()
+        scrapping_results:List[Dict[str,str]] = [] 
+        for page in pages_with_results:
+            (url , result_counter) = page[0] , page[1]
+            self.driver_manager.get(url)
+            row_data_elements = self.driver_manager.driver.find_elements(By.CSS_SELECTOR, '.row.item-row:not(.search-ads)')
+            number_of_results:int = 0
+            for row in row_data_elements:
+                scrapped_data:Dict[str,str] = {
+                    "title": self.get_tilte(row),
+                    "description": self.get_description(row),
+                    "address": self.get_address(row),
+                    "image_url": self.get_company_logo(row),
+                    "website_url": self.get_website_url(row),
+                    "category": self.get_category(row),
+                    "phone_address": self.get_phone_number(row)
+                }
+                number_of_results += 1
+                scrapping_results.apped(scrapped_data)
+                if number_of_results >= result_counter:
+                    break
+        return scrapping_results
+                    
         
         
     

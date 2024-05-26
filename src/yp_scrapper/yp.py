@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from yp_scrapper.driver import DriverManager
 
 
-class Scrapper():
+class Scrapper:
     """
     scrape yellow pages 
     extract info from cards and return data

@@ -2,7 +2,7 @@ import time
 
 from selenium import webdriver
 
-class DriverManager():
+class DriverManager:
     """
     handle web driver operations 
     like init , quit and get url

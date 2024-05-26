@@ -1,5 +1,6 @@
 import time
-import datetime
+import math
+from datetime import datetime
 from typing import List , Any , Dict
 from selenium.webdriver.common.by import By 
 from yp_scrapper import DriverManager
@@ -128,7 +129,7 @@ class YPScrapper:
         if self.card_numbers <= 20:
             return [f"{YPScrapper.BASE_URL}{self.keyword}/p1", self.card_numbers]
         pages:List = []
-        number_of_pages:int = int((self.card_numbers/YPScrapper.CARDS_PER_PAGE))+1
+        number_of_pages:int = math.ceil((self.card_numbers/YPScrapper.CARDS_PER_PAGE))
         cards:int = self.card_numbers
         for i in range(1,number_of_pages+1):
             if cards <= 20:
@@ -168,7 +169,7 @@ class YPScrapper:
                     "website_url": self.get_website_url(row),
                     "category": self.get_category(row),
                     "phone_number": self.get_phone_number(row),
-                    "at": datetime.datetime.now()
+                    "date": datetime.now()
                 }
                 print(scrapped_data)
                 number_of_results += 1

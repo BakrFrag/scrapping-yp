@@ -17,6 +17,7 @@ async def scrape_yp(request_data: ScrapeRequest):
         ScrapeResponse
     """
     try:
+    
         print(f" received request scrape data with {request_data.number} and {request_data.keyword}")
         driver_manager = DriverManager()
         print("define driver manager")

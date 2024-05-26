@@ -26,4 +26,4 @@ class ScrapeResponse(BaseModel):
     image_url: Optional[str]
     phone_number: Optional[str]
     category: Optional[str]
-    at: datetime
+    date: datetime

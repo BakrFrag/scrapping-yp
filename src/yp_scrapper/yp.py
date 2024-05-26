@@ -35,5 +35,21 @@ class Scrapper():
         except:
             return "N/A"
         
+    def get_phone_number(self, card) -> str:
+        """
+        extract phone number if exists 
+        returns: str 
+            phone number value
+        """
+        
+        try:
+            callback_us_element = card.find_element(By.CLASS_NAME, 'call-us-click')
+            callback_us_element.click()
+            time.sleep(1)
+            data_content = callback_us_element.get_attribute('data-content')
+            return data_content.split('tel:')[1].split('"')[0] if 'tel:' in data_content else 'N/A'
+        except:
+            return "N/A"
+        
     
         

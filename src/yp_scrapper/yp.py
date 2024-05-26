@@ -66,6 +66,17 @@ class Scrapper():
         except:
             return "N/A"
             
+    def get_website_url(self,card) -> str:
+        """
+        get website url
+        returns: str 
+            website url
+        """
+        try:
+            website = card.find_element(By.CLASS_NAME, 'website')
+            return website.get_attribute("href")
+        except:
+            return "N/A"
         
     
         

@@ -38,6 +38,8 @@ class Scrapper():
     def get_phone_number(self, card) -> str:
         """
         extract phone number if exists 
+        hints:
+            phone number not shown until click , waits for 1 second for data render
         returns: str 
             phone number value
         """
@@ -50,6 +52,20 @@ class Scrapper():
             return data_content.split('tel:')[1].split('"')[0] if 'tel:' in data_content else 'N/A'
         except:
             return "N/A"
+        
+    def get_address(self, card) -> str:
+        """
+        extract address if exists
+        returns: str 
+            address extract
+        """
+        try:
+            item_addres = card.find_element(By.CLASS_NAME , "address-text")
+            address = item_addres.text.split()
+            return " ".join(i for i in address)
+        except:
+            return "N/A"
+            
         
     
         

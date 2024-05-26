@@ -1,14 +1,21 @@
 import time
+from typing import List , Any
 from selenium import webdriver
 from selenium.webdriver.common.by import By 
 from yp_scrapper.driver import DriverManager
+
+
 class Scrapper():
     """
     scrape yellow pages 
     extract info from cards and return data
     """
+    CARDS_PER_PAGE:int = 20
+    BASE_URL:str = "https://yellowpages.com.eg/en/search/"
     
-    def __init__(self, driver_manager:DriverManager):
+    def __init__(self, card_numbers:int , keyword:str, driver_manager:DriverManager):
+        self.card_numbers = card_numbers
+        self.keyword = keyword
         self.driver_manager = driver_manager
         
     def get_tilte(self , card) -> str:
@@ -101,11 +108,35 @@ class Scrapper():
             logo_container = card.find_element(By.CLASS_NAME , "logo-container")
             image = logo_container.find_element(By.TAG_NAME , "img")
             image_url = image.get_attribute("src")  or image.get_attribute("data-src") 
-            image_url = image_url if image_url.startswith("https://") else  f"https://{image_url}"
-            return image_url
+            image_url_with_https = image_url if image_url.startswith("https://") else  f"https://{image_url}"
+            return image_url_with_https
         
         except:
             return "N/A"
+        
+        
+    def define_pages(self) ->List[Any]:
+        """
+        for pagination handling
+        define number of pages to be scrapped and number of results being extracted 
+        per each page
+        
+        return: List[List[str, int]]
+            list of lists , inner list include str reprsents page url and int include number of card info being extracted
+        """
+        
+        if self.card_numbers <= 20:
+            return [self.url, self.card_numbers]
+        pages:List = []
+        number_of_pages:int = int((self.card_numbers/Scrapper.CARDS_PER_PAGE))+1
+        cards:int = self.card_numbers
+        for i in range(1,number_of_pages+1):
+            if cards <= 20:
+                pages.append([f"{Scrapper.BASE_URL}/{self.keyword}/p{i}",cards])
+            else:
+                pages.append([f"{self.url}/p{i}",20])
+                cards -= 20
+        return pages
         
         
     

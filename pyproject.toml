@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "scrapping-yp"
+version = "0.1.0"
+description = "scrapping yp and extract nessary info"
+authors = ["bakrfrag"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
